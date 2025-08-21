@@ -1,74 +1,31 @@
-import { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import type { Video } from '../types/Video';
 import { api } from '../api';
-import { Video } from '../types/Video';
 
-interface VideoFormProps {
-  fetchVideos: () => void;
-  editingVideo: Video | null;
-  setEditingVideo: (video: Video | null) => void;
-}
+type Props = {
+  onCreate: (video: Video) => void;
+};
 
-export function VideoForm({ fetchVideos, editingVideo, setEditingVideo }: VideoFormProps) {
+export function VideoForm({ onCreate }: Props) {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [duration, setDuration] = useState<number | ''>('');
-
-  useEffect(() => {
-    if (editingVideo) {
-      setTitle(editingVideo.title);
-      setDescription(editingVideo.description);
-      setDuration(editingVideo.duration);
-    } else {
-      setTitle('');
-      setDescription('');
-      setDuration('');
-    }
-  }, [editingVideo]);
+  const [duration, setDuration] = useState(0);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    const videoData = {
-      title,
-      description,
-      duration: Number(duration),
-    };
-
-    if (editingVideo) {
-      await api.put(`/videos/${editingVideo.id}`, videoData);
-      setEditingVideo(null);
-    } else {
-      await api.post('/videos', videoData);
-    }
-
+    const response = await api.post('/videos', { title, description, duration });
+    onCreate({ id: '', title, description, duration }); // id vazio porque o backend não retorna ainda
     setTitle('');
     setDescription('');
-    setDuration('');
-    fetchVideos();
+    setDuration(0);
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <input
-        placeholder="Title"
-        value={title}
-        onChange={e => setTitle(e.target.value)}
-        required
-      />
-      <input
-        placeholder="Description"
-        value={description}
-        onChange={e => setDescription(e.target.value)}
-        required
-      />
-      <input
-        type="number"
-        placeholder="Duration (seconds)"
-        value={duration}
-        onChange={e => setDuration(e.target.value === '' ? '' : Number(e.target.value))}
-        required
-      />
-      <button type="submit">{editingVideo ? 'Update' : 'Create'}</button>
+      <input placeholder="Title" value={title} onChange={e => setTitle(e.target.value)} />
+      <input placeholder="Description" value={description} onChange={e => setDescription(e.target.value)} />
+      <input type="number" placeholder="Duration" value={duration} onChange={e => setDuration(Number(e.target.value))} />
+      <button type="submit">Create Video</button>
     </form>
   );
 }

@@ -1,15 +1,14 @@
-import { useEffect, useState } from 'react';
-import { api } from './api';
-import { Video } from './types/Video';
+import React, { useEffect, useState } from 'react';
+import type { Video } from './types/Video';
 import { VideoForm } from './components/VideoForm';
 import { VideoList } from './components/VideoList';
+import { api } from './api';
 
 export default function App() {
   const [videos, setVideos] = useState<Video[]>([]);
-  const [editingVideo, setEditingVideo] = useState<Video | null>(null);
 
   const fetchVideos = async () => {
-    const response = await api.get('/videos');
+    const response = await api.get<Video[]>('/videos');
     setVideos(response.data);
   };
 
@@ -17,11 +16,15 @@ export default function App() {
     fetchVideos();
   }, []);
 
+  const handleCreate = (video: Video) => {
+    setVideos(prev => [...prev, video]);
+  };
+
   return (
     <div>
       <h1>Video CRUD</h1>
-      <VideoForm fetchVideos={fetchVideos} editingVideo={editingVideo} setEditingVideo={setEditingVideo} />
-      <VideoList videos={videos} fetchVideos={fetchVideos} setEditingVideo={setEditingVideo} />
+      <VideoForm onCreate={handleCreate} />
+      <VideoList videos={videos} />
     </div>
   );
 }
