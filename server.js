@@ -54,6 +54,13 @@ server.delete('/videos/:id', async(request, reply) => {
 })
 
 
-server.listen({
-    port: 3333,
-})
+const port = process.env.PORT ? Number(process.env.PORT) : 3333;
+
+server.listen({ port, host: '0.0.0.0' })
+  .then(() => {
+    console.log(`Server running on port ${port}`);
+  })
+  .catch(err => {
+    console.error("Error starting server:", err);
+    process.exit(1);
+  });
