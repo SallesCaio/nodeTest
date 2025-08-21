@@ -3,8 +3,8 @@ Content-Type: application/json
 
 
 {
-    "title": "Video node",
-    "description": "My video description",
+    "title": "Video database",
+    "description": "Teste database",
     "duration": 120
 }   
 
@@ -12,17 +12,17 @@ Content-Type: application/json
 
 ###
 
-GET  http://localhost:3333/videos?search=node
+GET  http://localhost:3333/videos
  
 
 ###
 
-PUT http://localhost:3333/videos/76cb12ba-c24c-416b-82e7-a9fc57c7e443
+PUT http://localhost:3333/videos/f993929e-2f80-4060-800e-421876764d9d
 Content-Type: application/json
 
 {
-    "title": "Video 01",
-    "description": "Meu vídeo 01",
+    "title": "Video alterado",
+    "description": "Minha primeira alteração",
     "duration": 120
 }   
 
