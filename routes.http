@@ -1,4 +1,4 @@
-POST http://localhost:3333/videos
+POST https://nodetest-cbwh.onrender.com/videos
 Content-Type: application/json
 
 
@@ -12,23 +12,23 @@ Content-Type: application/json
 
 ###
 
-GET  http://localhost:3333/videos
+GET  https://nodetest-cbwh.onrender.com/videos
  
 
 ###
 
-PUT http://localhost:3333/videos/f993929e-2f80-4060-800e-421876764d9d
+PUT https://nodetest-cbwh.onrender.com/videos/53967051-c076-491b-91c2-63899b6a4165
 Content-Type: application/json
 
 {
-    "title": "Video alterado",
-    "description": "Minha primeira alteração",
+    "title": "Video alterado 02",
+    "description": "Minha segunda alteração",
     "duration": 120
 }   
 
 ###
 
-DELETE http://localhost:3333/videos/b740beff-ee02-492e-a349-dcbefbab26a8
+DELETE https://nodetest-cbwh.onrender.com/videos/f993929e-2f80-4060-800e-421876764d9d
 
 ###
 
