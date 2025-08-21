@@ -8,6 +8,11 @@ const server = fastify()
 //const database = new DatabaseMemory()
 const database = new DatabasePostgres()
 
+server.get('/', async (request, reply) => {
+  return { message: "Server is running 🚀" };
+});
+
+
 server.post('/videos', async(request, reply) => {
     const { title, description, duration } = request.body
 
