@@ -1,18 +1,22 @@
-import React from 'react';
-import type { Video } from '../types/Video';
+import React from "react";
+import { Video } from "../types/Video";
 
-type Props = {
+interface VideoListProps {
   videos: Video[];
-};
+}
 
-export function VideoList({ videos }: Props) {
+export const VideoList: React.FC<VideoListProps> = ({ videos }) => {
+  if (!videos.length) return <p>No videos found</p>;
+
   return (
     <ul>
-      {videos.map(video => (
+      {videos.map((video) => (
         <li key={video.id}>
-          <strong>{video.title}</strong> - {video.description} ({video.duration} min)
+          <h3>{video.title}</h3>
+          <p>{video.description}</p>
+          <p>Duration: {video.duration} sec</p>
         </li>
       ))}
     </ul>
   );
-}
+};

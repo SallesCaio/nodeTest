@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import type { Video } from './types/Video';
-import { VideoForm } from './components/VideoForm';
-import { VideoList } from './components/VideoList';
-import { api } from './api';
+// src/App.tsx
+import React, { useEffect, useState } from "react";
+import { Video } from "./types/Video";
+import { api } from "./api";
+import { VideoForm } from "./components/VideoForm";
+import { VideoList } from "./components/VideoList";
 
-export default function App() {
+const App: React.FC = () => {
   const [videos, setVideos] = useState<Video[]>([]);
 
   const fetchVideos = async () => {
-    const response = await api.get<Video[]>('/videos');
+    const response = await api.get<Video[]>("/videos");
     setVideos(response.data);
   };
 
@@ -17,7 +18,7 @@ export default function App() {
   }, []);
 
   const handleCreate = (video: Video) => {
-    setVideos(prev => [...prev, video]);
+    setVideos((prev) => [...prev, video]);
   };
 
   return (
@@ -27,4 +28,6 @@ export default function App() {
       <VideoList videos={videos} />
     </div>
   );
-}
+};
+
+export default App; // ✅ export default
